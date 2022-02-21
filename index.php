@@ -1,3 +1,6 @@
+<?php
+require 'controller.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +10,6 @@
     <title></title>
 </head>
 <body>
-    
+    <h1>C'est bon</h1>
 </body>
 </html>
