@@ -1,0 +1,17 @@
+{
+    "name": "globo/livep2",
+    "autoload": {
+        "psr-4": {
+            "Globo\\Livep2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mickael Noel",
+            "email": "mickael.noel@novei.fr"
+        }
+    ],
+    "require": {
+        "nikic/fast-route": "^1.3"
+    }
+}
