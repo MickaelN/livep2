@@ -28,26 +28,41 @@ class User extends Model
     public function checkTokenRegister(): bool
     {
         $query = 'SELECT COUNT(`id`) AS `number` FROM ' . $this->table
-        . ' WHERE `tokenregister` = :tokenregister';
+            . ' WHERE `tokenregister` = :tokenregister';
         $queryStatement = $this->pdo->prepare($query);
         $queryStatement->bindValue(':tokenregister', $this->tokenregister, \PDO::PARAM_STR);
         $queryStatement->execute();
         $response = $queryStatement->fetchColumn();
-        if($response === 0){
+        if ($response === 0) {
             return false;
-        }else if(!$response){
+        } else if (!$response) {
             throw new Exception('La bdd a pas voulu !!!!');
         }
         return true;
     }
 
-    public function deleteToken():bool{
-        $query= 'UPDATE '. $this->table
-        .' SET `tokenregister` = null'
-        .' WHERE `tokenregister` = :tokenregister';
+    public function deleteToken(): bool
+    {
+        $query = 'UPDATE ' . $this->table
+            . ' SET `tokenregister` = null'
+            . ' WHERE `tokenregister` = :tokenregister';
         $queryStatement = $this->pdo->prepare($query);
         $queryStatement->bindValue(':tokenregister', $this->tokenregister, \PDO::PARAM_STR);
-       return $queryStatement->execute();
+        return $queryStatement->execute();
+    }
+    /**
+     * Permet de récupérer le hash du password et le token d'inscription
+     *
+     * @return object
+     */
+    public function getLoginInfo(): object
+    {
+        $query = 'SELECT `password`,`tokenregister` FROM ' . $this->table
+            . ' WHERE `mail` = :mail';
+        $queryStatement = $this->pdo->prepare($query);
+        $queryStatement->bindValue(':mail', $this->mail, \PDO::PARAM_STR);
+        $queryStatement->execute();
+        return $queryStatement->fetch(\PDO::FETCH_OBJ);
     }
 
     public function setMail(string $value): void
@@ -70,7 +85,8 @@ class User extends Model
         return $this->tokenregister;
     }
 
-    public function getMail(){
+    public function getMail()
+    {
         return $this->mail;
     }
 }
