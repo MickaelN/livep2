@@ -2,7 +2,10 @@
     "name": "globo/livep2",
     "autoload": {
         "psr-4": {
-            "Controller\\": "src/Controller/"
+            "Controller\\": "src/Controller/",
+            "Model\\": "src/Model/",
+            "View\\": "src/View/",
+            "Utils\\": "src/Utils/"
         }
     },
     "authors": [

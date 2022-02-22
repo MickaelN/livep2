@@ -9,7 +9,12 @@ require __DIR__ . '/vendor/autoload.php';
  */
 
 $router = new AltoRouter();
-$router->map( 'GET', '/user/register', 'UserController#saveUser' );
+//Cette route permet de valider l'inscription
+$router->map('GET', '/user/register/[*:token]', 'UserController#accountValidation');
+//cette route permet d'afficher le formulaire de création de compte
+$router->map( 'GET', '/user/register', 'UserController#getFormRegister' );
+//route pour valider le formulaire
+$router->map( 'POST', '/user/register', 'UserController#saveUser' );
 
 $match = $router->match();
 
@@ -23,7 +28,7 @@ if ($match === false) {
     
     
     if ( is_callable(array('\Controller\\' . $controller, $action)) ) {
-        call_user_func_array(array('\Controller\\' .$controller,$action), array($match['params']));
+        call_user_func_array(array('\Controller\\' .$controller,$action), $match['params']);
     } else {
         // here your routes are wrong.
         // Throw an exception in debug, send a  500 error in production
